@@ -15,22 +15,29 @@ class ProductController extends Controller
             "vo"=>"Võ", "dang"=>"Đặng", "bui"=>"Bùi", "do"=>"Đỗ", "ho"=>"Hồ",
             "duong"=>"Dương", "ly"=>"Lý", "van"=>"Văn", "thi"=>"Thị",
             "thanh"=>"Thành", "tuan"=>"Tuấn", "anh"=>"Ánh", "hung"=>"Hùng",
-            "khanh"=>"Khánh"
+            "khanh"=>"Khánh","t"=>"Thị","v"=>"Văn"
         ];
 
-        $parts = preg_split('/\s+/', strtolower(trim($name)));
-        $result = [];
+        $parts = preg_split('/\s+/', trim($name));
+        $count =count($parts);
+
+        if($count==0) return'';
+
+        $lastname = array_pop($parts);
+        $covertedParts=[];
 
         foreach ($parts as $part) {
             $key = strtolower($part);
             if (isset($dictionary[$key])) {
-                $result[] = $dictionary[$key]; 
+                $covertedParts[] = $dictionary[$key];
             } else {
-                $result[] = ucfirst(strtolower($part));
+                $covertedParts[] = ucfirst(strtolower($part));
             }
         }
 
-        return implode(" ", $result);
+        $lastname =ucfirst(strtolower($lastname));
+
+        return implode(" ", $covertedParts).' '.$lastname;
     }
 
     public function index()
